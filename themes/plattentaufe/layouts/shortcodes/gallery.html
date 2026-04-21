@@ -1,0 +1,10 @@
+{{/* gallery shortcode – usage: {{< gallery img1="URL" img2="URL" ... >}} */}}
+<div class="gallery-grid" role="list">
+  {{ range $key, $url := .Params }}
+  {{ if hasPrefix $key "img" }}
+  <a href="#" data-lightbox="{{ $url }}" data-alt="Bild" role="listitem" aria-label="Bild vergrößern">
+    <img src="{{ $url }}" alt="Bild" loading="lazy">
+  </a>
+  {{ end }}
+  {{ end }}
+</div>

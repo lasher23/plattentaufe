@@ -1,0 +1,48 @@
+{{ define "main" }}
+<div class="page-title-banner">
+  <h1>{{ .Title }}</h1>
+</div>
+
+<div class="page-wrapper">
+  <div class="post-grid">
+    {{ range .Paginator.Pages }}
+    <article class="post-card">
+      {{ with .Params.ogimage }}
+      <img class="post-card-thumb" src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+      {{ else }}
+      <div class="post-card-thumb-placeholder"></div>
+      {{ end }}
+      <div class="post-card-body">
+        <div class="post-card-date">{{ .Date.Format "02. January 2006" }}</div>
+        <h2 class="post-card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ with .Description }}
+        <p class="post-card-excerpt">{{ . }}</p>
+        {{ else }}
+        <p class="post-card-excerpt">{{ .Summary }}</p>
+        {{ end }}
+        <a class="post-card-link" href="{{ .RelPermalink }}">Weiterlesen →</a>
+      </div>
+    </article>
+    {{ end }}
+  </div>
+
+  {{ $paginator := .Paginator }}
+  {{ if gt $paginator.TotalPages 1 }}
+  <nav class="pagination" aria-label="Seitennavigation">
+    {{ if $paginator.HasPrev }}
+    <a href="{{ $paginator.Prev.URL }}">← Zurück</a>
+    {{ end }}
+    {{ range $paginator.Pagers }}
+    {{ if eq . $paginator }}
+    <span class="current">{{ .PageNumber }}</span>
+    {{ else }}
+    <a href="{{ .URL }}">{{ .PageNumber }}</a>
+    {{ end }}
+    {{ end }}
+    {{ if $paginator.HasNext }}
+    <a href="{{ $paginator.Next.URL }}">Weiter →</a>
+    {{ end }}
+  </nav>
+  {{ end }}
+</div>
+{{ end }}

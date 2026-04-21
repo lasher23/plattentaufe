@@ -1,0 +1,29 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>{{ if .IsHome }}{{ site.Title }} – {{ site.Params.tagline }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+
+{{ $description := or .Description site.Params.description }}
+<meta name="description" content="{{ $description }}">
+
+<!-- Open Graph -->
+<meta property="og:title" content="{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }}{{ end }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="{{ site.Title }}">
+{{ with .Params.ogimage }}<meta property="og:image" content="{{ . }}">{{ else }}
+<meta property="og:image" content="{{ site.Params.ogImage }}">{{ end }}
+
+<!-- Canonical -->
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- RSS -->
+{{ range .AlternativeOutputFormats -}}
+  <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}
+
+<!-- CSS -->
+{{ $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">

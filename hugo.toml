@@ -1,0 +1,49 @@
+baseURL = "https://username.github.io/plattentaufe/"
+languageCode = "de-DE"
+defaultContentLanguage = "de"
+title = "Plattentaufe"
+theme = "plattentaufe"
+enableRobotsTXT = true
+
+[pagination]
+  pagerSize = 10
+
+[params]
+  description = "Abenteuer Veloreise – Ein Reiseblog"
+  author = "Martina & Mattia"
+  siteTitle = "Plattentaufe"
+  tagline = "Abenteuer Veloreise"
+  ogImage = "https://image.jimcdn.com/app/cms/image/transf/none/path/s3cfddd76ed1fd136/backgroundarea/i92dbf2f07d5559f7/version/1754800298/image.png"
+
+[menu]
+  [[menu.main]]
+    name = "Start"
+    url = "/"
+    weight = 1
+  [[menu.main]]
+    name = "Reiseblog"
+    url = "/posts/"
+    weight = 2
+  [[menu.main]]
+    name = "Galerie"
+    url = "/galerie/"
+    weight = 3
+  [[menu.main]]
+    name = "Über uns"
+    url = "/ueber-uns/"
+    weight = 4
+  [[menu.main]]
+    name = "Kontakt"
+    url = "/kontakt/"
+    weight = 5
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    noClasses = false

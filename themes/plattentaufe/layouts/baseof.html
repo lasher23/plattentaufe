@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <header class="site-header">
+    {{ partial "header.html" . }}
+  </header>
+
+  <main>
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <footer class="site-footer">
+    {{ partial "footer.html" . }}
+  </footer>
+
+  <!-- Lightbox overlay -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
+    <button class="lightbox-close" id="lightbox-close" aria-label="Schließen">&times;</button>
+    <img id="lightbox-img" src="" alt="" />
+  </div>
+
+  <script>
+    // Mobile navigation toggle
+    const toggle = document.getElementById('nav-toggle');
+    const nav = document.getElementById('main-nav');
+    if (toggle && nav) {
+      toggle.addEventListener('click', () => nav.classList.toggle('open'));
+    }
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.getElementById('lightbox-close');
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-lightbox]');
+      if (trigger) {
+        e.preventDefault();
+        lightboxImg.src = trigger.getAttribute('data-lightbox');
+        lightboxImg.alt = trigger.getAttribute('data-alt') || '';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+
+    if (lightbox) {
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox || e.target === lightboxClose) {
+          lightbox.classList.remove('active');
+          document.body.style.overflow = '';
+          lightboxImg.src = '';
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+          lightbox.classList.remove('active');
+          document.body.style.overflow = '';
+          lightboxImg.src = '';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
